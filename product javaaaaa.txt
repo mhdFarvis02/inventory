@@ -1,0 +1,172 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Main.java to edit this template
+ */
+package productp;
+import java.sql.*; 
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+/**
+ *
+ * @author Abraar
+ */
+import java.util.HashMap;
+import java.util.Map;
+
+class Product {
+    private int productId;
+    private String productName;
+    private String category;
+    private double price;
+    private int quantity;
+    private int availableStock;
+
+    public Product(int productId, String productName, String category, double price, int quantity, int availableStock) {
+        this.productId = productId;
+        this.productName = productName;
+        this.category = category;
+        this.price = price;
+        this.quantity = quantity;
+        this.availableStock = availableStock;
+    }
+
+    // Getters and Setters
+    public int getProductId() {
+        return productId;
+    }
+
+    public void setProductId(int productId) {
+        this.productId = productId;
+    }
+
+    public String getProductName() {
+        return productName;
+    }
+
+    public void setProductName(String productName) {
+        this.productName = productName;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+
+    public int getAvailableStock() {
+        return availableStock;
+    }
+
+    public void setAvailableStock(int availableStock) {
+        this.availableStock = availableStock;
+    }
+}
+
+class Inventory {
+    private Map<Integer, Product> products;
+
+    public Inventory() {
+        this.products = new HashMap<>();
+    }
+
+    public void addProduct(Product product) {
+        products.put(product.getProductId(), product);
+    }
+
+    public void removeProduct(int productId) {
+        products.remove(productId);
+    }
+
+    public void displayAllProducts() {
+        for (Product product : products.values()) {
+            System.out.println(product.getProductName() + " - " + product.getPrice());
+        }
+    }
+
+    public Product searchProductByName(String name) {
+        for (Product product : products.values()) {
+            if (product.getProductName().equalsIgnoreCase(name)) {
+                return product;
+            }
+        }
+        return null;
+    }
+
+    public Product searchProductByCategory(String category) {
+        for (Product product : products.values()) {
+            if (product.getCategory().equalsIgnoreCase(category)) {
+                return product;
+            }
+        }
+        return null;
+    }
+
+    public void updateProduct(int productId, Product newProductInfo) {
+        if (products.containsKey(productId)) {
+            products.put(productId, newProductInfo);
+        } else {
+            System.out.println("Product with ID " + productId + " does not exist.");
+        }
+    }
+   
+    }
+
+
+public class ProductP{
+    public static void main(String[] args) {
+        Inventory inventory = new Inventory();
+            
+        // Adding products
+        inventory.addProduct(new Product(1, "Laptop", "Electronics", 999.99, 10, 10));
+        inventory.addProduct(new Product(2, "Smartphone", "Electronics", 599.99, 20, 20));
+        inventory.addProduct(new Product(3, "Shirt", "Clothing", 29.99, 50, 50));
+
+        // Display all products
+        System.out.println("All Products:");
+        inventory.displayAllProducts();
+
+        // Search product by name
+        Product laptop = inventory.searchProductByName("Laptop");
+        if (laptop != null) {
+            System.out.println("Found Product: " + laptop.getProductName());
+        } else {
+            System.out.println("Product not found.");
+        }
+
+        // Update product
+        Product newLaptopInfo = new Product(1, "Gaming Laptop", "Electronics", 1299.99, 5, 5);
+        inventory.updateProduct(1, newLaptopInfo);
+        System.out.println("Updated Product:");
+        inventory.displayAllProducts();
+
+        // Remove product
+        inventory.removeProduct(2);
+        System.out.println("Products after removal:");
+        inventory.displayAllProducts();
+    }
+    
+    
+    
+ 
+}
+}
